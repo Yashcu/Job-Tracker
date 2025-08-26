@@ -1,5 +1,6 @@
+// backend/src/server.ts
 import express from "express";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db";
@@ -15,10 +16,22 @@ const PORT = process.env.PORT || 3000
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-    origin: process.env.CLIENT_URL, 
+
+const clientURL = process.env.CLIENT_URL;
+
+// Correct CORS configuration with explicit types
+const corsOptions: CorsOptions = {
+    origin: (origin, callback) => {
+        if (!origin || (clientURL && origin.startsWith(clientURL))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use('/api', healthRoutes);
@@ -31,7 +44,7 @@ const startServer = async () => {
         await connectDB();
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
-        });        
+        });
     }
     catch(error){
         console.error("Failed to start server:", error);
@@ -40,4 +53,3 @@ const startServer = async () => {
 };
 
 startServer();
-
