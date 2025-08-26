@@ -214,10 +214,10 @@ flowchart LR
     DAPI --> AX
   end
 
-  AX ==> BE[(HTTP API)]
+  AX -->|HTTP| S[server.ts]
 
   subgraph Backend [Express + TS]
-    S[server.ts] --> RA[routes/auth.ts]
+    S --> RA[routes/auth.ts]
     S --> RJ[routes/jobs.ts]
     S --> RAN[routes/analytics.ts]
     S --> RH[routes/health.ts]
@@ -226,16 +226,17 @@ flowchart LR
     RJ --> CJ[controllers/jobController.ts]
     RAN --> CAN[controllers/analyticsController.ts]
 
-    CJ <-- MWA[middleware/auth.ts]
-    CAN <-- MWA
+    MWA[middleware/auth.ts]
+    MWA --> CJ
+    MWA --> CAN
 
     CA --> UModel[models/User.ts]
     CJ --> JModel[models/Job.ts]
 
-    S --> DB[config/db.ts]
+    S --> DBConf[config/db.ts]
   end
 
-  DB == MongoDB ==> Data[(Collections)]
+  DBConf --> MDB[(MongoDB Collections)]
 ```
 
 ---
@@ -282,6 +283,5 @@ JWT is sent as `Authorization: Bearer <token>`.
 - Run formatters/linters if configured, and ensure no TypeScript errors.
 
 ---
-
 ### License
 MIT (or your chosen license)
