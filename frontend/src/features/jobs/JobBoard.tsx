@@ -57,7 +57,7 @@ const JobBoard = () => {
     setEditingJob(job);
     setIsModalOpen(true);
   };
-  
+
   const handleDelete = async (jobId: string) => {
       if(window.confirm("Are you sure you want to delete this job?")) {
           try {
@@ -90,7 +90,8 @@ const JobBoard = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {STATUSES.map((status) => (
-              <div key={status} className="bg-gray-100 rounded-lg p-4">
+              // Use theme-aware muted background for columns
+              <div key={status} className="bg-muted rounded-lg p-4">
                 <h3 className="font-semibold mb-4">{status} ({jobsByStatus[status].length})</h3>
                 <div className="space-y-4">
                   {jobsByStatus[status].map((job) => (

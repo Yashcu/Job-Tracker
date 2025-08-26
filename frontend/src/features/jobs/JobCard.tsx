@@ -11,12 +11,13 @@ interface JobCardProps {
 }
 
 const JobCard = ({ job, onEdit, onDelete }: JobCardProps) => {
-  const getStatusColor = (status: string) => {
+  // Use theme-aware colors for badges
+  const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
     switch (status) {
-      case 'Interview': return 'bg-blue-500';
-      case 'Offer': return 'bg-green-500';
-      case 'Rejected': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'Interview': return 'secondary';
+      case 'Offer': return 'default'; // default is primary color
+      case 'Rejected': return 'destructive';
+      default: return 'outline'; // Applied
     }
   };
 
@@ -28,7 +29,8 @@ const JobCard = ({ job, onEdit, onDelete }: JobCardProps) => {
             <CardTitle>{job.role}</CardTitle>
             <CardDescription>{job.company}</CardDescription>
           </div>
-          <Badge className={getStatusColor(job.status)}>{job.status}</Badge>
+          {/* Use variant prop for dynamic styling */}
+          <Badge variant={getStatusVariant(job.status)}>{job.status}</Badge>
         </div>
       </CardHeader>
       <CardContent>

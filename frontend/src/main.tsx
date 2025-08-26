@@ -6,14 +6,17 @@ import App from './App';
 import './index.css';
 import { AuthProvider } from './features/auth/AuthContext';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from './components/theme-provider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <App />
-        <Toaster position="bottom-center" reverseOrder={false} />
-      </AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <App />
+          <Toaster position="bottom-center" reverseOrder={false} />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
