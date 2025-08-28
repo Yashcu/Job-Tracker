@@ -1,8 +1,8 @@
-// frontend/src/features/jobs/DraggableJobCard.tsx
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import JobCard from './JobCard';
-import type { IJob } from '@/types/job';
+// frontend/src/features/jobs/components/DraggableJobCard.tsx
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import JobCard from "./JobCard";
+import type { IJob } from "@/types/job";
 
 interface DraggableJobCardProps {
   job: IJob;
@@ -17,11 +17,13 @@ const DraggableJobCard = (props: DraggableJobCardProps) => {
     setNodeRef,
     transform,
     transition,
+    isDragging, // Get the dragging state from the hook
   } = useSortable({ id: props.job._id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? 0 : 1,
   };
 
   return (

@@ -1,7 +1,7 @@
 // src/features/auth/RegisterPage.tsx
-import { Navigate } from 'react-router-dom'; // Import Navigate
-import AuthForm from './AuthForm';
-import { useAuth } from './AuthContext';
+import { Navigate } from "react-router-dom"; // Import Navigate
+import AuthForm from "./components/AuthForm";
+import { useAuth } from "./AuthContext";
 
 const RegisterPage = () => {
   const { token } = useAuth();

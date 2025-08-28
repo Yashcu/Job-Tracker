@@ -6,6 +6,7 @@ export interface IJob {
   company: string;
   role: string;
   status: JobStatus;
+  ctc?: number;
   createdAt: string;
   updatedAt: string;
 }

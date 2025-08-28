@@ -1,9 +1,25 @@
 // src/features/dashboard/AnalyticsPage.tsx
-import { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { getStatusCounts, getTrends, type TrendData } from './api';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { toast } from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+} from "recharts";
+import { getStatusCounts, getTrends, type TrendData } from "./api";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import { toast } from "react-hot-toast";
 
 const AnalyticsPage = () => {
   const [statusData, setStatusData] = useState<any[]>([]);
@@ -13,16 +29,18 @@ const AnalyticsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statusRes, trendsRes] = await Promise.all([getStatusCounts(), getTrends()]);
-        
+        const [statusRes, trendsRes] = await Promise.all([
+          getStatusCounts(),
+          getTrends(),
+        ]);
+
         // Format status data for the bar chart
-        const formattedStatusData = Object.keys(statusRes).map(key => ({
+        const formattedStatusData = Object.keys(statusRes).map((key) => ({
           name: key,
-          count: statusRes[key]
+          count: statusRes[key],
         }));
         setStatusData(formattedStatusData);
         setTrendData(trendsRes);
-
       } catch (error) {
         toast.error("Failed to fetch analytics data.");
       } finally {
@@ -39,7 +57,7 @@ const AnalyticsPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-       <h2 className="text-3xl font-bold tracking-tight">Analytics Dashboard</h2>
+      <h2 className="text-3xl font-bold tracking-tight">Analytics Dashboard</h2>
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -63,13 +81,18 @@ const AnalyticsPage = () => {
             <CardTitle>Application Trends</CardTitle>
           </CardHeader>
           <CardContent>
-             <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={trendData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="_id" />
                 <YAxis allowDecimals={false} />
                 <Tooltip />
-                <Area type="monotone" dataKey="count" stroke="#82ca9d" fill="#82ca9d" />
+                <Area
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#82ca9d"
+                  fill="#82ca9d"
+                />
               </AreaChart>
             </ResponsiveContainer>
           </CardContent>
