@@ -7,6 +7,7 @@ export interface IJob extends Document {
     company: string;
     role: string;
     status: JobStatus;
+    ctc?: number;
     salary?: number;
     link?: string;
     notes?: string;
@@ -22,6 +23,7 @@ const jobSchema = new Schema<IJob>(
             enum: ["Applied", "Interview", "Offer", "Rejected"],
             default: "Applied",
         },
+        ctc: { type: Number }, // Added CTC to the schema
         salary: Number,
         link: String,
         notes: String,

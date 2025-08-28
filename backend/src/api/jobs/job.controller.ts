@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Job } from "../models/Job";
+import { Job } from "../../models/Job";
 
 //Create job
 export const createJob = async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ export const getJob = async (req: Request, res: Response) => {
 };
 
 // Get All jobs
-export const getjobs = async (req: Request, res: Response) => {
+export const getJobs = async (req: Request, res: Response) => {
     try {
         const { status } = req.query;
         const filter: any = { user: req.user!.userId };

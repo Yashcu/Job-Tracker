@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
-import { generateAccessToken, generateRefreshToken } from "../utils/jwt";
+import { User } from "../../models/User";
+import { generateAccessToken, generateRefreshToken } from "../../utils/jwt";
 
 export const getMe = async (req: Request, res:Response) => {
     try{
@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const accessToken = generateAccessToken(user._id.toString());
-        const refreshToken = generateRefreshToken(user._id.toString()); 
+        const refreshToken = generateRefreshToken(user._id.toString());
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,

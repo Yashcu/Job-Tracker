@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { Job, JobStatus } from "../models/Job";
+import { Job, JobStatus } from "../../models/Job";
 
 //Get Status Distribution
 export const getStatusCounts = async (req: Request, res: Response) => {
