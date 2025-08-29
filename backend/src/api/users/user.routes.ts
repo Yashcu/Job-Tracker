@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updateUser } from "./user.controller";
+import { updateUser, changePassword } from "./user.controller";
 import { AuthMiddleware } from "../../middleware/auth.middleware";
 import { validate } from "../../middleware/validation.middleware";
 import { z } from "zod";
@@ -11,6 +11,15 @@ const updateUserSchema = z.object({
     email: z.email().optional(),
 });
 
+const changePasswordSchema = z.object({
+    oldPassword: z.string().min(6),
+    newPassword: z.string().min(6),
+}).refine(data => data.newPassword !== data.oldPassword, {
+    message: "New password must be different from the old password.",
+    path: ["newPassword"],
+});
+
 router.put("/me", AuthMiddleware, validate(updateUserSchema), updateUser);
+router.post("/change-password", AuthMiddleware, validate(changePasswordSchema), changePassword);
 
 export default router;

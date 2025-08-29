@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db";
 
-import userRotes from "./api/users/user.routes"
+import userRoutes from './api/users/user.routes';
 import authRoutes from './api/auth/auth.routes';
 import jobRoutes from './api/jobs/job.routes';
 import analyticsRoute from './api/analytics/analytics.routes'
@@ -33,7 +33,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 //API Routes
-app.use('./api/users',userRotes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/analytics', analyticsRoute);
