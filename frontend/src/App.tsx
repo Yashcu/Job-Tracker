@@ -1,11 +1,12 @@
 // src/App.tsx
-import { Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from './app/ProtectedRoute';
-import LoginPage from './features/auth/LoginPage';
-import RegisterPage from './features/auth/RegisterPage';
-import DashboardLayout from './features/dashboard/DashboardLayout';
-import JobBoard from './features/jobs/JobBoard';
-import AnalyticsPage from './features/dashboard/AnalyticsPage'; 
+import { Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./app/ProtectedRoute";
+import LoginPage from "./features/auth/LoginPage";
+import RegisterPage from "./features/auth/RegisterPage";
+import DashboardLayout from "./features/dashboard/DashboardLayout";
+import JobBoard from "./features/jobs/JobBoard";
+import AnalyticsPage from "./features/dashboard/AnalyticsPage";
+import ProfilePage from "./features/profile/ProfilePage";
 
 function App() {
   return (
@@ -13,12 +14,13 @@ function App() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      
+
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
           {/* Render the JobBoard as the main dashboard view */}
-          <Route index element={<JobBoard />} /> 
+          <Route index element={<JobBoard />} />
           <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
     </Routes>

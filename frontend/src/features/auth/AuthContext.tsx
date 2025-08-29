@@ -1,5 +1,12 @@
-// src/features/auth/AuthContext.tsx
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+// frontend/src/features/auth/AuthContext.tsx
+
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 import api from "../../lib/axios";
 
 interface User {
@@ -15,13 +22,16 @@ interface AuthContextType {
   login: (credentials: any) => Promise<void>;
   register: (userData: any) => Promise<void>;
   logout: () => Promise<void>;
+  fetchUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem("accessToken"));
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("accessToken")
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   // Function to fetch the user's data after a successful login/initial load
@@ -66,13 +76,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
-  const value = { user, token, isLoading, login, register, logout };
+  const value = { user, token, isLoading, login, register, logout, fetchUser };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

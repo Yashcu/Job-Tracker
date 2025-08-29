@@ -2,9 +2,9 @@
 import api from '../../lib/axios';
 import type { IJob } from '../../types/job';
 
-export const getJobs = async (): Promise<IJob[]> => {
-  const response = await api.get('/jobs');
-  return response.data;
+export const getJobs = async (page = 1, limit = 10): Promise<{ jobs: IJob[], totalPages: number, currentPage: number }> => {
+    const response = await api.get('/jobs', { params: { page, limit } });
+    return response.data;
 };
 
 export const createJob = async (jobData: Omit<IJob, '_id' | 'createdAt' | 'updatedAt'>): Promise<IJob> => {

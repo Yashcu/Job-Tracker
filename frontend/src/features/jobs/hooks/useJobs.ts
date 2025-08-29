@@ -4,10 +4,12 @@ import { toast } from 'react-hot-toast';
 import { getJobs, createJob as apiCreateJob, updateJob as apiUpdateJob, deleteJob as apiDeleteJob } from '../api';
 import type { IJob } from '@/types/job';
 
-const useJobs = () => {
+const useJobs = (page = 1, limit = 10) => {
   const queryClient = useQueryClient();
 
-  const { data: jobs = [], isLoading } = useQuery<IJob[]>('jobs', () => getJobs());
+  const { data, isLoading } = useQuery(['jobs', page, limit], () => getJobs(page, limit), {
+        keepPreviousData: true,
+    });
 
   const createJob = useMutation(apiCreateJob, {
     onSuccess: () => {
@@ -38,7 +40,7 @@ const useJobs = () => {
     queryClient.setQueryData('jobs', newJobs);
   };
 
-  return { jobs, isLoading, createJob, updateJob, deleteJob, setJobs };
+  return { jobs: data?.jobs || [], totalPages: data?.totalPages || 1, currentPage: data?.currentPage || 1, isLoading, createJob, updateJob, deleteJob, setJobs };
 };
 
 export default useJobs;

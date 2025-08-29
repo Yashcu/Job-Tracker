@@ -27,6 +27,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+type JobFormValues = {
+  company: string;
+  role: string;
+  status: JobStatus;
+  ctc?: number;
+};
+
 const STATUSES: JobStatus[] = ["Applied", "Interview", "Offer", "Rejected"];
 
 const JobBoard = () => {
@@ -46,7 +53,7 @@ const JobBoard = () => {
     })
   );
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: JobFormValues) => {
     try {
       if (editingJob) {
         await updateJob.mutateAsync({ ...editingJob, ...data });

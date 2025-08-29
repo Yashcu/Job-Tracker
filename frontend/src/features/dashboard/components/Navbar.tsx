@@ -43,18 +43,6 @@ const Navbar = ({ onAddNewJob }: NavbarProps) => {
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <div className="flex items-center gap-6">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-primary"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
             <h1 className="text-lg font-bold">Job Tracker</h1>
           </Link>
           <nav className="hidden md:flex items-center gap-4 text-sm">
@@ -120,6 +108,9 @@ const Navbar = ({ onAddNewJob }: NavbarProps) => {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/profile">Profile</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>
                   Log out
                 </DropdownMenuItem>

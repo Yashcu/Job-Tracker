@@ -33,23 +33,30 @@ export const getJob = async (req: Request, res: Response) => {
 // Get All jobs
 export const getJobs = async (req: Request, res: Response) => {
     try {
-        const { status } = req.query;
+        const { status, page = 1, limit = 10 } = req.query;
         const filter: any = { user: req.user!.userId };
 
-        // Conditionally add the status to the filter
         if (status) {
             filter.status = status;
         }
 
-        const jobs = await Job.find(filter).sort({ createdAt: -1 });
-        res.json(jobs);
-    }
-    catch (err) {
+        const jobs = await Job.find(filter)
+            .sort({ createdAt: -1 })
+            .skip((Number(page) - 1) * Number(limit))
+            .limit(Number(limit));
+
+        const totalJobs = await Job.countDocuments(filter);
+
+        res.json({
+            jobs,
+            totalPages: Math.ceil(totalJobs / Number(limit)),
+            currentPage: Number(page),
+        });
+    } catch (err) {
         console.error("GET JOBS ERROR:", err);
         res.status(500).json({ error: "Failed to fetch jobs" });
     }
 };
-
 
 // Update Job
 export const updateJob = async (req: Request, res: Response) => {
